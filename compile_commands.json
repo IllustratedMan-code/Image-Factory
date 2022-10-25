@@ -1,0 +1,55 @@
+[
+  {
+    "arguments": [
+      "/nix/store/3d9zjv5vaqjxb9kwbdqsd194alwm97x1-gcc-wrapper-11.3.0/bin/g++",
+      "-c",
+      "-I/nix/store/qn28ga3j85fn0b3ff9k2841aln82d1zj-opencv-4.5.4/include/opencv4",
+      "-o",
+      "base16",
+      "3Dcolor.cpp"
+    ],
+    "directory": "/home/david/Documents/Project/image-factory",
+    "file": "/home/david/Documents/Project/image-factory/3Dcolor.cpp",
+    "output": "/home/david/Documents/Project/image-factory/base16"
+  },
+  {
+    "arguments": [
+      "/nix/store/jdc41bl531bw84wi82y6gvij34q5m24a-gcc-11.3.0/bin/g++",
+      "-c",
+      "-fPIC",
+      "-Wformat",
+      "-Wformat-security",
+      "-Werror=format-security",
+      "-fstack-protector-strong",
+      "--param",
+      "ssp-buffer-size=4",
+      "-O2",
+      "-D_FORTIFY_SOURCE=2",
+      "-fno-strict-overflow",
+      "-Wl,-dynamic-linker=/nix/store/6f66prpgx1qx4n6k450sxs3d157ia1ps-glibc-2.35-163/lib/ld-linux-x86-64.so.2",
+      "-I/nix/store/qn28ga3j85fn0b3ff9k2841aln82d1zj-opencv-4.5.4/include/opencv4",
+      "-B/nix/store/6f66prpgx1qx4n6k450sxs3d157ia1ps-glibc-2.35-163/lib/",
+      "-idirafter",
+      "/nix/store/1x86jfiwsp5qi448fcdkkzn7vmx4krv2-glibc-2.35-163-dev/include",
+      "-idirafter",
+      "/nix/store/jdc41bl531bw84wi82y6gvij34q5m24a-gcc-11.3.0/lib/gcc/x86_64-unknown-linux-gnu/11.3.0/include-fixed",
+      "-B/nix/store/cs16l9whsq2mgydlg0j4x517z4qr861k-gcc-11.3.0-lib/lib",
+      "-B/nix/store/3d9zjv5vaqjxb9kwbdqsd194alwm97x1-gcc-wrapper-11.3.0/bin/",
+      "-frandom-seed=d0r831069a",
+      "-isystem",
+      "/nix/store/qn28ga3j85fn0b3ff9k2841aln82d1zj-opencv-4.5.4/include",
+      "-isystem",
+      "/nix/store/qn28ga3j85fn0b3ff9k2841aln82d1zj-opencv-4.5.4/include",
+      "-Wl,-rpath",
+      "-Wl,/home/david/Documents/Project/image-factory/outputs/out/lib64",
+      "-Wl,-rpath",
+      "-Wl,/home/david/Documents/Project/image-factory/outputs/out/lib",
+      "-o",
+      "base16",
+      "3Dcolor.cpp"
+    ],
+    "directory": "/home/david/Documents/Project/image-factory",
+    "file": "/home/david/Documents/Project/image-factory/3Dcolor.cpp",
+    "output": "/home/david/Documents/Project/image-factory/base16"
+  }
+]
