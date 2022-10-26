@@ -1,19 +1,19 @@
 # Image Factory
-This is a tool for making images have a particular *pallete* of colors. 
-Simply give image-factory a pallete.txt file full of the desired colors, and it will give you an image containing *only* those colors.
+This is a tool for making images have a particular *palette* of colors. 
+Simply give image-factory a palette.txt file full of the desired colors, and it will give you an image containing *only* those colors.
 
 Original (3648x5472)            |  Nord Color Pallete (2.688 seconds)
 :-------------------------:|:-------------------------:
 ![](./wallpaper.jpg)  |  ![](newwallpaper.jpg)
 
 ## Usage
-There are three mandatory options, one for an input image, one for a `pallete.txt` file and one for an output destination.
+There are three mandatory options, one for an input image, one for a `palette.txt` file and one for an output destination.
 ```bash
-image-factory --input wallpaper.jpg --pallete pallete.txt --output new_wallpaper.jpg
+image-factory --input wallpaper.jpg --palette palette.txt --output new_wallpaper.jpg
 ```
 Other flags can be seen with the built in help `image-factory --help`.
 
-View the `pallete.txt` file in this repo for an example of the [Nord color palette](https://www.nordtheme.com/).
+View the `palette.txt` file in this repo for an example of the [Nord color palette](https://www.nordtheme.com/).
 
 
 ## Install
@@ -38,13 +38,13 @@ Nix users can just run `nix develop` to get the required dependencies, `nix buil
 
 ## Algorithm
 How does `image-factory` work? I'm using the simplest euclidean technique outlined [here](https://en.wikipedia.org/wiki/Color_difference).
-The closest color in the pallete is calculated for each pixel in the target image using the relative distance formula in three dimensions.
+The closest color in the palette is calculated for each pixel in the target image using the relative distance formula in three dimensions.
 The relative weight of each color is defined by scalars `r`, `g`, and `b`.
 
 $$r \cdot R^2 + g \cdot G^2 + b \cdot B^2$$
 
 This is the naive (least efficient and least complex) approach to the [nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search) problem in a coordinate system. 
-This shouldn't be a problem for most use cases, but as palletes grow in size, `image-factory` will get slower in a linear fashion.` 
+This shouldn't be a problem for most use cases, but as palettes grow in size, `image-factory` will get slower in a linear fashion.` 
 
 ### Potential improvements
 All of these improvements will add complexity to the program.
@@ -53,7 +53,7 @@ A space partitioned tree structure might help here, but it won't neccesarily per
 #### Greedy method
 This method uses a graph data structure to determine distance. It is not 100% accurate, but it may be faster than the current implementation
 #### Delauny triangulation
-A three dimensional [Delauny triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) or more aptly a Delauny tetrahedrization could be used to determine the closest four colors in the pallete.
+A three dimensional [Delauny triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) or more aptly a Delauny tetrahedrization could be used to determine the closest four colors in the palette.
 #### OpenGL
 An Opengl shader would *probably* outperform all of these algorithms because it takes advantage of the gpu for calculations. Its also a lot harder to implement (at least for me).
 #### rust pixels

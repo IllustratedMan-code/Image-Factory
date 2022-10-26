@@ -52,16 +52,16 @@ void snap_pixel(Pixel &pixel, vector<Color> colors) {
   auto index = distance(begin(dist), it);
   colors[index].set_pixel_color(pixel);
 }
-void convert_image(string input_image_path, string pallete_path,
+void convert_image(string input_image_path, string palette_path,
                    string output_image_path, int r_scale, int g_scale,
                    int b_scale) {
   Mat image;
   image = imread(input_image_path, 1);
   vector<Color> colors;
-  ifstream pallete(pallete_path);
-  if (pallete.is_open()) {
+  ifstream palette(palette_path);
+  if (palette.is_open()) {
     string hex_color;
-    while (getline(pallete, hex_color)) {
+    while (getline(palette, hex_color)) {
       colors.push_back(Color(hex_color, r_scale, g_scale, b_scale));
     };
   }
@@ -72,9 +72,9 @@ void convert_image(string input_image_path, string pallete_path,
 }
 
 int main(int argc, char **argv) {
-  CLI::App app{"apply color pallete to image"};
-  string pallete_path;
-  app.add_option("-p,--pallete", pallete_path, "path to pallete file")
+  CLI::App app{"apply color palette to image"};
+  string palette_path;
+  app.add_option("-p,--palette", palette_path, "path to palette file")
       ->required()
       ->check(CLI::ExistingFile);
   string input_image_path;
@@ -92,6 +92,6 @@ int main(int argc, char **argv) {
   app.add_option("-b,--blue", b_scale, "Blue scale factor")->default_val(3);
 
   CLI11_PARSE(app, argc, argv)
-  convert_image(input_image_path, pallete_path, output_image_path, r_scale,
+  convert_image(input_image_path, palette_path, output_image_path, r_scale,
                 g_scale, b_scale);
 };
