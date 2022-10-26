@@ -2,6 +2,10 @@
 This is a tool for making images have a particular *pallete* of colors. 
 Simply give image-factory a pallete.txt file full of the desired colors, and it will give you an image containing *only* those colors.
 
+Original              |  Nord Color Pallete
+:-------------------------:|:-------------------------:
+![](./wallpaper.jpg)  |  ![](newwallpaper.jpg)
+
 ## Usage
 There are three mandatory options, one for an input image, one for a `pallete.txt` file and one for an output destination.
 ```bash
@@ -15,7 +19,7 @@ View the `pallete.txt` file in this repo for an example of the [Nord color palet
 ## Install
 I'm currently working on packaging it for Nix. I'm happy to help with packaging for other package managers, but only have the knowledge for Nix.
 
-For the time being though, Nix users (with flakes) can run image-factory like so:
+For the time being though, Nix users (with flakes) can run `image-factory` like so:
 ```bash
 nix run github:IllustratedMan-code/Image-Factory -- --help
 ```
@@ -37,7 +41,7 @@ How does `image-factory` work? I'm using the simplest euclidean technique outlin
 The closest color in the pallete is calculated for each pixel in the target image using the relative distance formula in three dimensions.
 The relative weight of each color is defined by scalars `r`, `g`, and `b`.
 
-$$r \cdot R^2 \cdot g \cdot G^2 \cdot b \cdot B^2$$
+$$r \cdot R^2 + g \cdot G^2 + b \cdot B^2$$
 
 This is the naive (least efficient and least complex) approach to the [nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search) problem in a coordinate system. 
 This shouldn't be a problem for most use cases, but as palletes grow in size, `image-factory` will get slower in a linear fashion.` 
@@ -51,9 +55,11 @@ This method uses a graph data structure to determine distance. It is not 100% ac
 #### Delauny triangulation
 A three dimensional [Delauny triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation) or more aptly a Delauny tetrahedrization could be used to determine the closest four colors in the pallete.
 #### OpenGL
-An Opengl shader would outperform all of these algorithms because it takes advantage of the gpu for calculations. Its also a lot harder to implement (at least for me).
+An Opengl shader would *probably* outperform all of these algorithms because it takes advantage of the gpu for calculations. Its also a lot harder to implement (at least for me).
 #### rust pixels
 This is a rust shader library, see example [here](https://github.com/parasyte/pixels/tree/main/examples/custom-shader).
+#### cuda support for opencv
+It appears that opencv can be compiled wit CUDA support which could make `image-factory` faster
 
 ## Alternatives
 - [ImageGoNord](https://github.com/Schrodinger-Hat/ImageGoNord)
@@ -61,4 +67,5 @@ This is a rust shader library, see example [here](https://github.com/parasyte/pi
 
 ImageGoNord seems to be the only alternative (as far as I know). gruvbox-factory used ImageGoNord behind the scenes. 
 It's a much more complicated program with web APIs and other such niceties. The other main feature it has in terms of images is an average filter. 
-I hope to implement something similar soon. `image-factory` is much simpler, but I believe the underlying algorithm is similar as run times .
+I hope to implement something similar soon. `image-factory` is much simpler, but I believe the underlying algorithm is similar as output looks very similar.
+I believe `image-factory` is faster, but I haven't done detailed testing. 
