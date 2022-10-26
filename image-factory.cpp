@@ -54,9 +54,14 @@ void snap_pixel(Pixel &pixel, vector<Color> colors) {
 }
 void convert_image(string input_image_path, string palette_path,
                    string output_image_path, int r_scale, int g_scale,
-                   int b_scale) {
+                   int b_scale, int average, int blur) {
   Mat image;
   image = imread(input_image_path, 1);
+  if (average > 1) {
+    auto kernel =
+        Mat::ones(average, average, CV_32F) / (float)(average * average);
+    filter2D(image, image, -1, kernel, Point(-1, -1), 0, BORDER_DEFAULT);
+  }
   vector<Color> colors;
   ifstream palette(palette_path);
   if (palette.is_open()) {
@@ -68,6 +73,10 @@ void convert_image(string input_image_path, string palette_path,
   image.forEach<Pixel>([colors](Pixel &pixel, const int *position) -> void {
     snap_pixel(pixel, colors);
   });
+  if (blur > 1) {
+    auto kernel = Mat::ones(blur, blur, CV_32F) / (float)(blur * blur);
+    filter2D(image, image, -1, kernel, Point(-1, -1), 0, BORDER_DEFAULT);
+  }
   imwrite(output_image_path, image);
 }
 
@@ -90,8 +99,15 @@ int main(int argc, char **argv) {
   app.add_option("-g,--green", g_scale, "Green scale factor")->default_val(4);
   int b_scale;
   app.add_option("-b,--blue", b_scale, "Blue scale factor")->default_val(3);
+  int average = 1;
+  app.add_option("-a, --average", average,
+                 "Size of pixel square to average over")
+      ->default_val(1);
+  int blur = 1;
+  app.add_option("-u, --blur", blur, "Size of pixel square to blur over")
+      ->default_val(1);
 
   CLI11_PARSE(app, argc, argv)
   convert_image(input_image_path, palette_path, output_image_path, r_scale,
-                g_scale, b_scale);
+                g_scale, b_scale, average, blur);
 };

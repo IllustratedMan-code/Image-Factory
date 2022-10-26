@@ -6,6 +6,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        # opencv with tbb support, doesn't seem to affect the time
+        # in tests
         opencvtbb = pkgs.opencv.override {
           enableTbb = true;
         };
@@ -23,7 +25,7 @@
       in
       {
         packages = flake-utils.lib.flattenTree {
-          default = image-factory opencvtbb;
+          default = image-factory pkgs.opencv;
         };
       }
     );

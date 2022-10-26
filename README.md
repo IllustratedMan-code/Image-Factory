@@ -68,6 +68,5 @@ It appears that opencv can be compiled wit CUDA support which could make `image-
 - [ImageColorizer](https://github.com/kiddae/ImageColorizer)
 
 ImageGoNord is the most popular alternative, gruvbox-factory used ImageGoNord behind the scenes. 
-It's a much more complicated program with web APIs and other such niceties. The other main feature it has in terms of images is an average filter. 
-I hope to implement something similar soon. `image-factory` is much simpler, but I believe the underlying algorithm is similar as output looks very similar.
+It's a much more complicated program with web APIs and other such niceties. `image-factory` is much simpler, but I believe the underlying algorithm is similar as output looks very similar.
 I believe `image-factory` is faster, but I haven't done detailed testing. 
