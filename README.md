@@ -2,7 +2,7 @@
 This is a tool for making images have a particular *pallete* of colors. 
 Simply give image-factory a pallete.txt file full of the desired colors, and it will give you an image containing *only* those colors.
 
-Original              |  Nord Color Pallete
+Original (3648x5472)            |  Nord Color Pallete (2.688 seconds with 8th gen core i5)
 :-------------------------:|:-------------------------:
 ![](./wallpaper.jpg)  |  ![](newwallpaper.jpg)
 
