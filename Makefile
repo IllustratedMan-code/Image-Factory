@@ -1,2 +1,2 @@
 opencv:
-	g++ 3Dcolor.cpp -o image-factory `pkg-config --cflags --libs opencv4`
+	g++ image-factory.cpp -o image-factory `pkg-config --cflags --libs opencv4`
