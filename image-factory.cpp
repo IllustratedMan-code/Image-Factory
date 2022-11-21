@@ -54,9 +54,10 @@ void snap_pixel(Pixel &pixel, vector<Color> colors) {
 }
 void convert_image(string input_image_path, string palette_path,
                    string output_image_path, int r_scale, int g_scale,
-                   int b_scale, int average, int blur) {
+                   int b_scale, int average, int blur, float blend) {
   Mat image;
   image = imread(input_image_path, 1);
+  auto ogImage = image.clone();
   if (average > 1) {
     auto kernel =
         Mat::ones(average, average, CV_32F) / (float)(average * average);
@@ -73,6 +74,9 @@ void convert_image(string input_image_path, string palette_path,
   image.forEach<Pixel>([colors](Pixel &pixel, const int *position) -> void {
     snap_pixel(pixel, colors);
   });
+  if (blend < 1.0) {
+    addWeighted(image, blend, ogImage, 1.0 - blend, 0.0, image);
+  }
   if (blur > 1) {
     auto kernel = Mat::ones(blur, blur, CV_32F) / (float)(blur * blur);
     filter2D(image, image, -1, kernel, Point(-1, -1), 0, BORDER_DEFAULT);
@@ -103,11 +107,15 @@ int main(int argc, char **argv) {
   app.add_option("-a, --average", average,
                  "Size of pixel square to average over")
       ->default_val(1);
+  float blend = 1;
+  app.add_option("--blend", blend,
+                 "Blend ratio between original and final image")
+      ->default_val(1);
   int blur = 1;
   app.add_option("-u, --blur", blur, "Size of pixel square to blur over")
       ->default_val(1);
 
   CLI11_PARSE(app, argc, argv)
   convert_image(input_image_path, palette_path, output_image_path, r_scale,
-                g_scale, b_scale, average, blur);
+                g_scale, b_scale, average, blur, blend);
 };
